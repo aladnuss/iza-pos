@@ -18,7 +18,7 @@ const CategoryFormPanel: React.FC<CategoryFormPanelProps> = ({ initialData, onSa
 
   if (!initialData) {
     return (
-      <aside className="w-80 h-full bg-[var(--color-black)] text-white flex flex-col overflow-hidden p-6 items-center justify-center">
+      <aside className="2xl:h-[1000px] xl:h-[800px] bg-[var(--color-black)] text-white flex flex-col overflow-hidden p-6 items-center justify-center">
         <span className="text-[var(--color-gray)] text-lg font-semibold">Select Category</span>
       </aside>
     );

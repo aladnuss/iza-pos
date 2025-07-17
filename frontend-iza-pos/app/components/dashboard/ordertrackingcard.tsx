@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart, BarElement, CategoryScale, LinearScale, Tooltip } from 'chart.js';
-import CustomSelect from '../costumselect';
+import CustomSelect from '../general/costumselect';
 
 
 Chart.register(BarElement, CategoryScale, LinearScale, Tooltip);

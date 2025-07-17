@@ -10,7 +10,7 @@ import {
   CartesianGrid,
   ReferenceDot,
 } from "recharts";
-import CustomSelect from "../costumselect";
+import CustomSelect from '../general/costumselect';
 
 // Dummy data asli
 const rawData = [
@@ -43,7 +43,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     const original = payload[0].payload;
     return (
-      <div className="bg-[var(--color-black)] text-[var(--color-white)] px-3 py-2 rounded shadow text-xs">
+      <div className="bg-[var(--color-black)] text-[var(--color-white)] px-3 py-2  rounded shadow text-xs">
         <div>{label} 2023</div>
         <div className="flex gap-2 items-center"><span style={{ color: '#ff9100', fontWeight: 600 }}>Earning:</span><span className="font-bold">Rp{original.earning.toLocaleString("id-ID")}</span></div>
         <div className="flex gap-2 items-center"><span style={{ color: '#4f8cff', fontWeight: 600 }}>Orders:</span><span className="font-bold">{original.orders}</span></div>
@@ -71,7 +71,7 @@ export default function SalesOverviewChart() {
   const [select2, setSelect2] = React.useState("all");
 
   return (
-    <div className="bg-[var(--color-black)] rounded-lg p-6 border border-1 w-full h-[350px]" style={{ borderColor: 'var(--color-card-border)' }}>
+    <div className="bg-[var(--color-black)] rounded-3xl shadow-lg p-6 border border-1 w-full h-[350px]" style={{ borderColor: 'var(--color-card-border)' }}>
       <div className="flex justify-between items-center mb-5">
         <div className="font-semibold text-[var(--color-white)]">Sales Overview</div>
         <div className="flex gap-2">

@@ -49,7 +49,7 @@ const StadiumChart = ({ score = 1, maxScore = 100 }) => {
   const activeDash = Math.round(progress * dashCount);
 
   return (
-    <div className="flex justify-center items-center mt-8 relative" style={{ width }}>
+    <div className="flex justify-center items-center mt-8 relative " style={{ width }}>
       <svg width={width} height={height}>
         <path d={d} fill="none" stroke="none" ref={pathRef} />
         {dashData.map(({ x, y, rot }, i) => (
@@ -185,7 +185,7 @@ const ScoreDashboard = () => {
   // State untuk card yang sedang aktif (di-tap)
   const [activeCard, setActiveCard] = useState(null);
   return (
-    <div className="border border-1 rounded-2xl p-3" style={{ borderColor: 'var(--color-card-border)' }}>
+    <div className="border border-1 rounded-3xl shadow-lg p-3" style={{ borderColor: 'var(--color-card-border)', background: 'var(--color-black)' }}>
       <div className="p-2 font-bold text-lg">Efficiency Score</div>
       <hr className="border-[var(--color-dark)] mt-2 w-117 mx-auto" />
       <div className="flex justify-center">

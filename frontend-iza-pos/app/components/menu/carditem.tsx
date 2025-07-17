@@ -30,7 +30,7 @@ const CardItem: React.FC<CardItemProps> = ({ name, price, count, onIncrement, on
 
   return (
     <div
-      className="relative w-[220px] h-[130px] rounded-2xl border shadow-md p-4 text-left overflow-hidden cursor-default flex flex-col justify-between transition-colors duration-300"
+      className="relative w-[225px] rounded-3xl border shadow-lg p-4 text-left overflow-hidden cursor-default flex flex-col justify-between transition-colors duration-300"
       style={{ background: active ? darkBg : (bgColor || 'var(--color-dark)'), borderColor: 'var(--color-gray)' }}
     >
       {/* Garis vertikal kiri */}

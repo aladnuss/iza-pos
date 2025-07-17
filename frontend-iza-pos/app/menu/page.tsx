@@ -4,12 +4,17 @@ import React, { useState } from 'react';
 import CategoryCard from '../components/menu/cardcategory';
 import CardItem from '../components/menu/carditem';
 import OrderPanel from '../components/menu/orderpanel';
-import SearchBar from '../components/searchbar';
+
+import HeaderContent from '../components/general/HeaderContent';
 
 const DUMMY_CATEGORIES = [
   { id: 'breakfast', name: 'Breakfast', itemCount: 13, bgColor: '#e3f6f5' },
   { id: 'soups', name: 'Soups', itemCount: 8, bgColor: '#f3e8ff' },
   { id: 'pasta', name: 'Pasta', itemCount: 10, bgColor: '#cce6f7' },
+  { id: 'sou3p2s', name: 'Soups', itemCount: 8, bgColor: '#f3e8ff' },
+  { id: 'pa3st2a', name: 'Pasta', itemCount: 10, bgColor: '#cce6f7' },
+  { id: 'sou2ps', name: 'Soups', itemCount: 8, bgColor: '#f3e8ff' },
+  { id: 'pa3sta', name: 'Pasta', itemCount: 10, bgColor: '#cce6f7' },
 ];
 
 const DUMMY_ITEMS = {
@@ -90,19 +95,15 @@ export default function MenuPage() {
 
   return (
     <div className="h-screen flex">
-      <main className="flex flex-1 gap-1 ml-3">
-        <section className="flex flex-col p-3 flex-1 overflow-hidden min-h-0">
+      <main className="flex flex-1 ml-3 overflow-auto">
+        <section className="flex flex-col pl-3 flex-1 overflow-hidden min-h-0">
           {/* SearchBar */}
-          <div className="mt-3 mb-4   ">
-            <SearchBar
-              value={searchValue}
-              onChange={e => setSearchValue(e.target.value)}
-              placeholder="Cari menu..."
-            />
-          </div>
+    <div className='mr-2'>
+            <HeaderContent />
+            </div>
 
           {/* Category Section */}
-          <div className="grid grid-cols-3 gap-5 mb-4 pr-3 overflow-y-auto h-[350px]">
+          <div className="grid grid-cols-3 overflow-y-auto h-[300px]">
             {categoriesWithColor.length > 0 ? (
               categoriesWithColor.map((cat, idx) => (
                 <CategoryCard
@@ -122,7 +123,7 @@ export default function MenuPage() {
           <hr className="border-[var(--color-card-border)] mr-2" />
 
           {/* Item List Section */}
-          <div className="grid grid-cols-3 gap-5 h-[500px] pr-3 mt-4 mb-3 overflow-y-auto place-content-start" style={{ gridAutoRows: 'min-content' }}>
+          <div className="grid grid-cols-3 gap-2 h-[500px] pr-2 mt-2 mb-3 overflow-y-auto place-content-start" style={{ gridAutoRows: 'min-content' }}>
             {selectedCategory && DUMMY_ITEMS[selectedCategory] ? (
               DUMMY_ITEMS[selectedCategory].map((item) => (
                 <CardItem
@@ -137,7 +138,7 @@ export default function MenuPage() {
                 />
               ))
             ) : (
-              <p className="flex items-center justify-center text-2sm font-semibold text-[var(--color-gray)] col-span-3">
+              <p className="flex items-center justify-center h-[390px] text-2sm font-semibold text-[var(--color-gray)] col-span-3">
                 Pilih kategori untuk melihat item
               </p>
             )}

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import SearchBar from '../searchbar';
-import BackButton from '../BackButton';
+import SearchBar from '../general/searchbar';
+import BackButton from '../general/BackButton';
+import VariantTableActions from './VariantTableActions';
+import HeaderContent from '../general/HeaderContent';
 
 export interface VariantType {
   id: number;
@@ -15,7 +17,8 @@ const AddVariantTable: React.FC<{
   onVariantsChange: (newVariants: VariantType[]) => void;
   onBack?: () => void;
   onAddVariant?: () => void;
-}> = ({ variants, onVariantsChange, onBack, onAddVariant }) => {
+  onEditVariant?: (variant: VariantType, index: number) => void;
+}> = ({ variants, onVariantsChange, onBack, onAddVariant, onEditVariant }) => {
   const [search, setSearch] = useState("");
   const [openRow, setOpenRow] = useState<number | null>(null);
 
@@ -27,24 +30,18 @@ const AddVariantTable: React.FC<{
   };
 
   return (
-    <div className="bg-[var(--color-black)] text-white rounded-2xl w-full">
-      <div className="flex items-center mb-4 gap-2">
-        <SearchBar
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          placeholder="Cari variant..."
-          className="min-w-[180px]"
-        />
-        <button
-          className="px-4 py-2 bg-[var(--color-dark)] text-white rounded-lg font-semibold hover:bg-[var(--color-black)] transition"
-          onClick={onAddVariant}
-        >
-          Add Variant +
-        </button>
-        <div className="flex-1" />
-        <BackButton onClick={onBack} />
-      </div>
-      <div className="overflow-x-auto">
+    <div className="">
+      <HeaderContent
+        showAddItem
+        itemSearchValue={search}
+        onItemSearchChange={e => setSearch(e.target.value)}
+        onAddItem={onAddVariant}
+        addButtonLabel="Add Variant +"
+        showBackButton={!!onBack}
+        onBack={onBack}
+      />
+
+      <div className="bg-[var(--color-black)] text-white p-5 rounded-2xl w-full">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-[var(--color-card-border)]">
@@ -52,6 +49,7 @@ const AddVariantTable: React.FC<{
               <th className="py-2 text-left">Description</th>
               <th className="py-2 text-center">Status</th>
               <th className="py-2 text-center">Variants</th>
+              <th className="py-2 text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -73,10 +71,16 @@ const AddVariantTable: React.FC<{
                       </svg>
                     </button>
                   </td>
+                  <td className="py-2 text-center">
+                    <VariantTableActions
+                      onEdit={() => onEditVariant && onEditVariant(variant, idx)}
+                      onDelete={() => {/* TODO: handle delete variant */}}
+                    />
+                  </td>
                 </tr>
                 {openRow === idx && (
                   <tr key={`subtable-${variant.id}`}>
-                    <td colSpan={4} className="bg-[var(--color-dark)] p-3">
+                    <td colSpan={5} className="bg-[var(--color-dark)] p-3">
                       <table className="w-full text-xs">
                         <thead>
                           <tr>

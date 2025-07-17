@@ -25,7 +25,7 @@ const ProductItemCard: React.FC<ProductItemCardProps> = ({ name, price, itemId, 
   const darkBg = bgColor ? darkenColor(bgColor, 0.18) : 'var(--color-gray)';
   return (
     <div
-      className={`relative w-[220px] h-[130px] rounded-2xl border shadow-md p-4 text-left overflow-hidden flex flex-col justify-between transition-colors duration-300 cursor-pointer hover:brightness-90`}
+      className={`relative w-[225px] h-[121px] rounded-3xl border shadow-md p-4 text-left overflow-hidden flex flex-col justify-between transition-colors duration-300 cursor-pointer hover:brightness-90`}
       style={{ background: isActive ? darkBg : (bgColor || 'var(--color-dark)'), borderColor: 'var(--color-gray)' }}
       onClick={onClick}
     >

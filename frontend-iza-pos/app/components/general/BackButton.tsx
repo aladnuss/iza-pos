@@ -14,12 +14,13 @@ const BackButton: React.FC<BackButtonProps> = ({ onClick, className = "" }) => (
       transition: "background 0.2s",
       width: 40,
       height: 40,
-      borderRadius: "50%",
+      borderRadius: "40%",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
       fontSize: 20,
       padding: 0,
+      border: "1px solid var(--color-card-border)",
     }}
     className={`font-semibold hover:opacity-90 ${className}`}
     aria-label="Back"

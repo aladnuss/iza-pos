@@ -2,35 +2,31 @@
 
 import React, { useState } from 'react';
 import { DollarSign, FileText, Users, ShoppingCart, ChevronDown } from 'lucide-react';
-import SearchBar from '../components/searchbar';
+import SearchBar from '../components/general/searchbar';
 import CardDashboard from '../components/dashboard/card';
 import BestSellerCard from '../components/dashboard/bestsellercard';
 import SalesOverviewChart from '../components/dashboard/salesoverviewchart';
 import PaymentChart from '../components/dashboard/paymentchart';
 import ScoreDashboard from '../components/dashboard/scoredashboard';
+import HeaderContent from '../components/general/HeaderContent';
 
 export default function Dashboard() {
   const [searchValue, setSearchValue] = useState('');
   // Sample data for the chart
  
   return (
-    <main className="flex-1 p-3 box-border">
-      <div className="mt-3 mb-4">
-        <SearchBar 
-        value={searchValue}
-        onChange={e => setSearchValue(e.target.value)}
-        placeholder="Cari menu..."
-        />
-      </div>
+    <main className="flex-1 pl-6 pr-4 pb-2 box-border">
+
+        <HeaderContent />
+
 
       {/* Card Baris 1*/}
-      <div className="grid gap-3 grid-cols-4">
+      <div className="grid gap-2 grid-cols-4">
         <div className="relative">
           <CardDashboard
-            icon={<DollarSign color='black'/>}
+            icon={<DollarSign color='var(--color-white)'/>}
             title="Total Earning"
             value="Rp 100.000"
-            bgColorClass="bg-[#292C2D]"
             percentage={12.5}
             isIncrease={true}
           >
@@ -42,10 +38,9 @@ export default function Dashboard() {
           </CardDashboard>
         </div>
         <CardDashboard
-          icon={<Users color='black'/>}
+          icon={<Users color='var(--color-white)'/>}
           title="Total Orders"
           value="46 Order"
-          bgColorClass="bg-[#292C2D]"
           percentage={10}
           isIncrease={false}
         >
@@ -56,10 +51,9 @@ export default function Dashboard() {
           />
         </CardDashboard>
         <CardDashboard
-          icon={<ShoppingCart color='black'/>}
+          icon={<ShoppingCart color='var(--color-white)'/>}
           title="On Progress"
           value="23 Items"
-          bgColorClass="bg-[#292C2D]"
           valueClassName="mb-6"
         >
           <img
@@ -69,10 +63,9 @@ export default function Dashboard() {
           />
         </CardDashboard>
         <CardDashboard
-          icon={<FileText color='black'/>}
+          icon={<FileText color='var(--color-white)'/>}
           title="Avarage Order Sales"
           value="Rp 85.600"
-          bgColorClass="bg-[#292C2D]"
           percentage={2}
           isIncrease={true}
         >
@@ -85,13 +78,13 @@ export default function Dashboard() {
       </div>
 
       {/* Card Baris 2*/}
-      <div className="grid grid-cols-2 gap-3 mt-3">
+      <div className="grid grid-cols-2 gap-2 mt-2">
         <BestSellerCard />
         <ScoreDashboard />
       </div>
 
       {/* Card Baris 3*/}
-      <div className="grid grid-cols-3 gap-3 mt-3">
+      <div className="grid grid-cols-3 gap-2 mt-2">
         <div className="col-span-2"><SalesOverviewChart /></div>
         <div className="col-span-1"><PaymentChart /></div>
       </div>

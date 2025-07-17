@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar from '../components/sidebar';
+import Sidebar from '../components/general/sidebar';
 
 const dashboard: React.FC = ({children}:{children: React.ReactNode}) => {
   return (

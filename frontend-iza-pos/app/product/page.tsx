@@ -4,18 +4,26 @@ import React, { useState } from 'react';
 import ProductCategoryCard from '../components/product/ProductCategoryCard';
 import ProductItemCard from '../components/product/ProductItemCard';
 import ProductFormPanel from '../components/product/ProductFormPanel';
-import SearchBar from '../components/searchbar';
+import SearchBar from '../components/general/searchbar';
 import DeleteConfirmModal from '../components/product/DeleteConfirmModal';
 import AddCategoryForm from '../components/product/AddCategoryForm';
 import AddItemForm from '../components/product/AddItemForm';
-import BackButton from '../components/BackButton';
+import BackButton from '../components/general/BackButton';
 import AddVariantTable from '../components/product/AddVariantTable';
 import { VariantType } from '../components/product/AddVariantTable';
+import VariantForm from '../components/product/VariantForm';
+import HeaderContent from '../components/general/HeaderContent';
 
 const DUMMY_CATEGORIES = [
   { id: 'beverage', name: 'Beverage', itemCount: 8, bgColor: '#e3f6f5', description: 'All drinks' },
   { id: 'snack', name: 'Snack', itemCount: 6, bgColor: '#f3e8ff', description: 'Light snacks' },
   { id: 'main', name: 'Main Course', itemCount: 7, bgColor: '#ffe4ef', description: 'Main dishes' },
+  { id: 'bevserage', name: 'Beverage', itemCount: 8, bgColor: '#e3f6f5', description: 'All drinks' },
+  { id: 'snaack', name: 'Snack', itemCount: 6, bgColor: '#f3e8ff', description: 'Light snacks' },
+  { id: 'maifn', name: 'Main Course', itemCount: 7, bgColor: '#ffe4ef', description: 'Main dishes' },
+  { id: 'bevexrage', name: 'Beverage', itemCount: 8, bgColor: '#e3f6f5', description: 'All drinks' },
+  { id: 'snaxck', name: 'Snack', itemCount: 6, bgColor: '#f3e8ff', description: 'Light snacks' },
+  { id: 'maxin', name: 'Main Course', itemCount: 7, bgColor: '#ffe4ef', description: 'Main dishes' },
 ];
 
 const INITIAL_ITEMS = {
@@ -82,6 +90,17 @@ export default function ProductPage() {
   const [panelMode, setPanelMode] = useState<'category' | 'item'>('category');
   const [formMode, setFormMode] = useState<'edit-category' | 'edit-item' | 'add-category' | 'add-item'>('edit-category');
   const [showVariantTable, setShowVariantTable] = useState(false);
+  const [showVariantForm, setShowVariantForm] = useState(false);
+  const [variantDraft, setVariantDraft] = useState(null);
+  const [editVariantIndex, setEditVariantIndex] = useState<number | null>(null);
+
+  React.useEffect(() => {
+    if (!selectedItemId || panelMode !== 'item' || formMode !== 'edit-item') {
+      setShowVariantForm(false);
+      setVariantDraft(null);
+      setEditVariantIndex(null);
+    }
+  }, [selectedItemId, panelMode, formMode]);
 
   // Ambil data kategori/item aktif langsung dari state
   const activeCategory = selectedCategory ? categories.find((c: any) => c.id === selectedCategory) : null;
@@ -101,12 +120,20 @@ export default function ProductPage() {
     setPanelMode('category');
     setSelectedCategory(null);
     setSelectedItemId(null);
+    setShowVariantForm(false);
+    setVariantDraft(null);
+    setEditVariantIndex(null);
+    setFormMode('edit-category');
+    setFormType('category');
   };
 
   const handleItemClick = (item: any) => {
     setSelectedItemId(item.id);
     setFormType('item');
-    setFormMode('edit-item'); // pastikan form kanan berubah ke edit item
+    setFormMode('edit-item');
+    setShowVariantForm(false);
+    setVariantDraft(null);
+    setEditVariantIndex(null);
   };
 
   const handleDeleteItem = (itemId: string) => {
@@ -202,6 +229,67 @@ export default function ProductPage() {
     }));
   };
 
+  // Handler untuk Add Variant Table
+  const handleShowVariantTable = () => setShowVariantTable(true);
+  // Handler untuk Add Variant Form
+  const handleEditVariant = (variant: VariantType, idx: number) => {
+    setVariantDraft(variant);
+    setEditVariantIndex(idx);
+    setShowVariantForm(true);
+  };
+  const handleSaveVariant = (data: { name: string; description: string; variasi: any[] }) => {
+    if (!selectedCategory || !selectedItemId) return;
+    setItems(prev => ({
+      ...prev,
+      [selectedCategory]: prev[selectedCategory].map((item) => {
+        if (item.id !== selectedItemId) return item;
+        let newVariants = [...(item.variants || [])];
+        if (editVariantIndex !== null) {
+          // Edit mode
+          newVariants[editVariantIndex] = {
+            ...newVariants[editVariantIndex],
+            name: data.name,
+            description: data.description,
+            variants: data.variasi,
+          };
+        } else {
+          // Add mode
+          newVariants = [
+            ...newVariants,
+            {
+              id: Date.now(),
+              name: data.name,
+              description: data.description,
+              status: true,
+              variants: data.variasi,
+            },
+          ];
+        }
+        return { ...item, variants: newVariants };
+      })
+    }));
+    setShowVariantForm(false);
+    setShowVariantTable(true);
+    setEditVariantIndex(null);
+    setVariantDraft(null);
+  };
+
+  const handleBackFromVariantForm = () => {
+    setShowVariantForm(false);
+    setEditVariantIndex(null);
+    setVariantDraft(null);
+    setShowVariantTable(false); // kembali ke item form
+    setFormMode('edit-item');
+  };
+
+  const handleBackFromVariantTable = () => {
+    setShowVariantTable(false);
+    setShowVariantForm(false);
+    setVariantDraft(null);
+    setEditVariantIndex(null);
+    setFormMode('edit-item');
+  };
+
   // Filter categories dan items berdasarkan search
   const filteredCategories = categories.filter((cat: any) =>
     cat.name.toLowerCase().includes(searchValue.toLowerCase())
@@ -215,122 +303,116 @@ export default function ProductPage() {
 
   return (
     <div className="h-screen flex">
-      {/* Panel Kiri: Category Card atau Item List */}
-      <div className="flex-1 flex flex-col p-6">
-        {panelMode === 'category' && (
-          <div>
-            <div className="flex items-center mb-4 gap-2">
-              <SearchBar
-                value={searchValue}
-                onChange={e => setSearchValue(e.target.value)}
-                placeholder="Cari kategori..."
-                className="min-w-[180px]"
-              />
-              <button
-                className="px-4 py-2 bg-[var(--color-dark)] text-white rounded-lg font-semibold hover:bg-[var(--color-black)] transition"
-                onClick={handleAddCategory}>
-                Add Category +
-              </button>
+      <main className="flex flex-1 ml-3 overflow-auto">
+        <section className="flex flex-col  flex-1 overflow-hidden min-h-0 mr-2 pl-3 ">
+          {panelMode === 'category' && (
+            <div>
+              <div className="flex items-center">
+                <HeaderContent onButtonClick={handleAddCategory} buttonLabel="Add Category +" />
+              </div>
+              <div className="grid grid-cols-3 gap-2">
+                {filteredCategories.length > 0 ? (
+                  filteredCategories.map((cat: any, idx: number) => (
+                    <ProductCategoryCard
+                      key={cat.id}
+                      name={cat.name}
+                      itemCount={items[cat.id]?.length || 0}
+                      bgColor={PALETTE_COLORS[idx % PALETTE_COLORS.length]}
+                      isActive={selectedCategory === cat.id}
+                      onClick={() => handleCategoryClick(cat.id)}
+                    />
+                  ))
+                ) : (
+                  <p className="col-span-3 text-center text-gray-400">Kategori tidak ditemukan</p>
+                )}
+              </div>
             </div>
-            <div className="grid grid-cols-3 gap-4">
-              {filteredCategories.length > 0 ? (
-                filteredCategories.map((cat: any, idx: number) => (
-                  <ProductCategoryCard
-                    key={cat.id}
-                    name={cat.name}
-                    itemCount={items[cat.id]?.length || 0}
-                    bgColor={PALETTE_COLORS[idx % PALETTE_COLORS.length]}
-                    isActive={selectedCategory === cat.id}
-                    onClick={() => handleCategoryClick(cat.id)}
-                  />
-                ))
+          )}
+          {panelMode === 'item' && selectedCategory && (
+            <div>
+              {showVariantTable ? (
+                <AddVariantTable
+                  variants={activeItem?.variants || []}
+                  onVariantsChange={newVariants => handleVariantsChange(selectedCategory, selectedItemId, newVariants)}
+                  onBack={handleBackFromVariantTable}
+                  onAddVariant={() => { setVariantDraft(null); setEditVariantIndex(null); setShowVariantForm(true); }}
+                  onEditVariant={handleEditVariant}
+                />
               ) : (
-                <p className="col-span-3 text-center text-gray-400">Kategori tidak ditemukan</p>
+                <>
+                  <div className="flex items-center justify-between gap-2">
+                    <HeaderContent
+                      showAddItem
+                      itemSearchValue={searchValue}
+                      onItemSearchChange={e => setSearchValue(e.target.value)}
+                      onAddItem={handleAddItem}
+                      showBackButton
+                      onBack={handleBackToCategory}
+                    />
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    {filteredItems.length > 0 ? (
+                      filteredItems.map((item: any) => (
+                        <ProductItemCard
+                          key={item.id}
+                          name={item.name}
+                          price={item.price}
+                          itemId={item.id}
+                          isActive={selectedItemId === item.id}
+                          bgColor={PALETTE_COLORS[categories.findIndex((cat: any) => cat.id === selectedCategory) % PALETTE_COLORS.length]}
+                          onClick={() => handleItemClick(item)}
+                        />
+                      ))
+                    ) : (
+                      <p className="col-span-3 text-center text-gray-400">Item tidak ditemukan</p>
+                    )}
+                  </div>
+                </>
               )}
             </div>
-          </div>
-        )}
-        {panelMode === 'item' && selectedCategory && (
-          <div>
-            {showVariantTable ? (
-              <AddVariantTable
-                variants={activeItem?.variants || []}
-                onVariantsChange={newVariants => handleVariantsChange(selectedCategory, selectedItemId, newVariants)}
-                onBack={() => setShowVariantTable(false)}
-                onAddVariant={handleAddItem}
-              />
-            ) : (
-              <>
-                <div className="flex items-center justify-between mb-4 gap-2">
-                  <div className="flex items-center gap-2">
-                    <SearchBar
-                      value={searchValue}
-                      onChange={e => setSearchValue(e.target.value)}
-                      placeholder="Cari item..."
-                      className="min-w-[180px]"
-                    />
-                    <button
-                      className="px-4 py-2 bg-[var(--color-dark)] text-white rounded-lg font-semibold hover:bg-[var(--color-black)] transition"
-                      onClick={handleAddItem}>
-                      Add Item +
-                    </button>
-                  </div>
-                  <BackButton onClick={handleBackToCategory}></BackButton>
-                </div>
-                <div className="grid grid-cols-3 gap-4">
-                  {filteredItems.length > 0 ? (
-                    filteredItems.map((item: any) => (
-                      <ProductItemCard
-                        key={item.id}
-                        name={item.name}
-                        price={item.price}
-                        itemId={item.id}
-                        isActive={selectedItemId === item.id}
-                        bgColor={PALETTE_COLORS[categories.findIndex((cat: any) => cat.id === selectedCategory) % PALETTE_COLORS.length]}
-                        onClick={() => handleItemClick(item)}
-                      />
-                    ))
-                  ) : (
-                    <p className="col-span-3 text-center text-gray-400">Item tidak ditemukan</p>
-                  )}
-                </div>
-              </>
-            )}
-          </div>
-        )}
-      </div>
-      {/* Panel Form */}
-      <aside className="w-80 h-screen max-h-screen bg-[var(--color-black)] text-white border-l border-[var(--color-card-border)] flex flex-col overflow-hidden">
-        {formMode === 'add-category' && (
-          <AddCategoryForm
-            onSave={handleSaveAddCategory}
-            onCancel={handleCancelAddCategory}
-          />
-        )}
-        {formMode === 'add-item' && (
-          <AddItemForm
-            onSave={handleSaveAddItem}
-            onCancel={handleCancelAddItem}
-          />
-        )}
-        {formMode === 'edit-category' && (
-          <ProductFormPanel
-            type="category"
-            initialData={activeCategory ? { name: activeCategory.name, description: activeCategory.description } : null}
-            onSave={handleSave}
-            onDeleteCategory={handleDeleteCategory}
-          />
-        )}
-        {formMode === 'edit-item' && (
-          <ProductFormPanel
-            type="item"
-            initialData={activeItem ? { ...activeItem } : null}
-            onSave={handleSave}
-            onDeleteItem={handleDeleteItemForm}
-            onShowVariantTable={() => setShowVariantTable(true)}
-          />
-        )}
-      </aside>
+          )}
+        </section>
+        {/* Panel Form */}
+        <aside className="w-80  bg-[var(--color-black)] text-white border rounded-3xl mr-4 mt-2 mb-2 border-[var(--color-card-border)] flex flex-col overflow-hidden">
+          {formMode === 'add-category' && (
+            <AddCategoryForm
+              onSave={handleSaveAddCategory}
+              onCancel={handleCancelAddCategory}
+            />
+          )}
+          {formMode === 'add-item' && (
+            <AddItemForm
+              onSave={handleSaveAddItem}
+              onCancel={handleCancelAddItem}
+            />
+          )}
+          {formMode === 'edit-category' && (
+            <ProductFormPanel
+              type="category"
+              initialData={activeCategory ? { name: activeCategory.name, description: activeCategory.description } : null}
+              onSave={handleSave}
+              onDeleteCategory={handleDeleteCategory}
+            />
+          )}
+          {panelMode === 'item' && formMode === 'edit-item' && !showVariantForm && selectedItemId && (
+            <ProductFormPanel
+              type="item"
+              initialData={activeItem ? { ...activeItem } : null}
+              onSave={handleSave}
+              onDeleteItem={handleDeleteItemForm}
+              onShowVariantTable={handleShowVariantTable}
+            />
+          )}
+          {panelMode === 'item' && formMode === 'edit-item' && showVariantForm && selectedItemId && (
+            <VariantForm
+              key={variantDraft ? variantDraft.id : 'new'}
+              onSave={handleSaveVariant}
+              onCancel={handleBackFromVariantForm}
+              initialData={variantDraft ? { name: variantDraft.name, description: variantDraft.description, variasi: variantDraft.variants } : undefined}
+            />
+          )}
+        </aside>
+      </main>
       {/* Delete Confirm Modals */}
       <DeleteConfirmModal
         open={showDeleteCategoryModal}

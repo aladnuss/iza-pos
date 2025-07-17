@@ -28,8 +28,8 @@ const CardDashboard: React.FC<CardDashboardProps> = ({
 }) => {
   return (
     <div
-      className={`p-8 min-h-[240px] card-ios rounded-2xl flex flex-col justify-between relative overflow-hidden border-1`}
-      style={{ borderColor: 'var(--color-card-border)', background: 'var(--color-card-bg)' }}
+      className={`p-9 min-h-[170px] rounded-3xl shadow-lg flex flex-col justify-between relative overflow-hidden border-1`}
+      style={{ borderColor: 'var(--color-card-border)', background: 'var(--color-black)' }}
     >
       {children}
       <div className="flex items-center gap-3 mb-4">

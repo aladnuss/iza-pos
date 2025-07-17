@@ -82,11 +82,11 @@ const ItemFormPanel: React.FC<ItemFormPanelProps> = ({ initialData, onSave, onCa
           style={{ background: "none", border: "none", boxShadow: "none", padding: 0, cursor: "pointer", textDecoration: "none" }}
           onClick={onShowVariantTable}
         >
-          Add Variant +
+          Variant List
         </button>
         <hr className="flex-1 border-t border-[var(--color-palette-4)] opacity-50" />
       </div>
-      <button className="bg-[var(--color-white)] text-black py-2 rounded-xl font-bold mt-2" onClick={() => onSave({ name, description, price, itemId, photo, variants })}>Save</button>
+      <button className="bg-[var(--color-white)] text-black py-2 rounded-xl font-bold mt-2 w-full" onClick={() => onSave({ name, description, price, itemId, photo, variants })}>Save</button>
     </aside>
   );
 };

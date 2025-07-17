@@ -56,8 +56,7 @@ const OrderPanel: React.FC<OrderPanelProps> = ({
 
   return (
     <aside
-      className={`w-80 h-screen max-h-screen bg-[var(--color-black)] text-white border-l border-[var(--color-card-border)]
-        flex flex-col overflow-hidden ${className}`}
+    className={`mr-4 mt-2 mb-2 w-80 min-h-[400px] bg-[var(--color-black)] text-white border border-[var(--color-card-border)] rounded-3xl shadow-lg flex flex-col overflow-hidden ${className}`}
     >
       {/* Header */}
       <header className="px-3 py-3 flex justify-between items-center] shrink-0">

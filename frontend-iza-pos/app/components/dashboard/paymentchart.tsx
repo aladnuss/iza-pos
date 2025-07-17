@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
-import CustomSelect from "../costumselect";
+import CustomSelect from '../general/costumselect';
 
 const data = [
   { name: "Cash", value: 15 },
@@ -50,7 +50,7 @@ export default function PaymentChart() {
   const [selected, setSelected] = React.useState("all");
 
   return (
-    <div className="bg-[var(--color-black)] rounded-lg p-6 border border-1 w-full h-[350px]" style={{ borderColor: 'var(--color-card-border)' }}>
+    <div className="bg-[var(--color-black)] rounded-3xl shadow-lg p-6 border border-1 w-full h-[350px]" style={{ borderColor: 'var(--color-card-border)' }}>
       <div className="flex justify-between items-center mb-5">
         <div className="font-semibold">Payment</div>
         <CustomSelect options={selectOptions} value={selected} onChange={setSelected} />

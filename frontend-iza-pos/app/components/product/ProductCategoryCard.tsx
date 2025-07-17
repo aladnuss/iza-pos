@@ -14,15 +14,15 @@ const ProductCategoryCard: React.FC<ProductCategoryCardProps> = ({
   name,
   itemCount,
   bgColor,
-  width = '220px',
-  height = '125px',
+  width = '225px',
+  height = '121px',
   isActive = false,
   onClick,
 }) => {
   return (
     <div
-      className={`relative rounded-2xl border flex flex-col justify-between p-5 transition text-left shadow-md cursor-pointer overflow-hidden`}
-      style={{ background: bgColor, borderColor: 'var(--color-gray)', width, height }}
+      className={`relative rounded-3xl shadow-lg border flex flex-col justify-between p-5 transition text-left shadow-md cursor-pointer overflow-hidden`}
+      style={{ background: bgColor, borderColor: 'var(--color-card-border)', width, height }}
       onClick={onClick}
     >
       <div
@@ -31,7 +31,7 @@ const ProductCategoryCard: React.FC<ProductCategoryCardProps> = ({
         }`}
       ></div>
       <div className="flex-1 flex flex-col justify-between relative z-10">
-        <div className="mb-2"></div>
+
         <div>
           <p className={`text-xl font-semibold mb-1 ${isActive ? 'text-white ' : 'text-gray-900'}`} style={{ color: 'var(--color-foreground)' }}>{name}</p>
           <p className={`text-sm mb-1 ${isActive ? 'text-white ' : 'text-gray-500'}`} style={{ color: 'var(--color-black)' }}>

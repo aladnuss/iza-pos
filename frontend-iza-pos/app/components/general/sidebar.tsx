@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Profile from "./dashboard/profile";
+import Profile from "../dashboard/profile";
 import ThemeToggle from "./ThemeToggle";
 
 const menus = [
@@ -19,24 +19,24 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-[220px] h-screen flex flex-col justify-between bg-[var(--color-gray-dark)] py-6 px-4 border-r border-[var(--color-card-border)] fixed left-0 top-0 z-50">
+    <aside className="w-[220px] h-[calc(100vh-15px)] flex flex-col justify-between bg-[var(--color-black)] py-6 px-4 border border-[var(--color-card-border)] rounded-3xl shadow-lg mt-2 ml-4  fixed z-50">
       {/* Bagian Atas: Logo + Menu */}
       <div>
         {/* Logo/Brand */}
-        <div className="mb-8 mt-3 flex items-center gap-2 px-2">
+        <div className="mb-8 flex items-center gap-2 px-2">
           <div className="w-8 h-8 bg-[var(--color-dark)] rounded-lg" />
           <span className="text-2xl font-bold text-[var(--color-white)]">Iza POS</span>
         </div>
 
         {/* Menu List */}
-        <nav className="flex flex-col gap-1 mt-9">
+        <nav className="flex  flex-col gap-1 mt-9">
           {menus.map((menu) => {
             const isActive = pathname === menu.href;
             return (
               <Link
                 key={menu.name}
                 href={menu.href}
-                className={`px-4 py-2 rounded-md font-medium transition-colors text-lg mb-1 ${
+                className={`px-4 py-2 rounded-2xl font-medium transition-colors text-lg mb-1 ${
                   isActive
                     ? "bg-[var(--color-dark)] text-[var(--color-white)] font-semibold"
                     : "text-[var(--color-gray)] hover:bg-[var(--color-dark)] hover:text-[var(--color-white)]"

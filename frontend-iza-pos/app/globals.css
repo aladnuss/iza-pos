@@ -21,6 +21,8 @@
   --color-chart-grid: #000000; /* grid gelap untuk dark mode */
 }
 
+
+
 /* Light mode overrides */
 [data-theme='light'] {
   --color-black: #f7f7f7;
@@ -28,7 +30,7 @@
   --color-white: #18181b;
   --color-white-light: #ffffff;
   --color-gray: #444;
-  --background: #f7f7f7;
+  --background: #e7e7e7;
   --foreground: #18181b;
   --color-palette-1: #C0C0C0;
   --color-palette-2: #A0A0A0;
