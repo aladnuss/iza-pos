@@ -5,7 +5,7 @@ import ProductCategoryCard from '../components/product/ProductCategoryCard';
 import ProductItemCard from '../components/product/ProductItemCard';
 import ProductFormPanel from '../components/product/ProductFormPanel';
 import SearchBar from '../components/general/searchbar';
-import DeleteConfirmModal from '../components/product/DeleteConfirmModal';
+import DeleteConfirmModal from '../components/general/DeleteConfirmModal';
 import AddCategoryForm from '../components/product/AddCategoryForm';
 import AddItemForm from '../components/product/AddItemForm';
 import BackButton from '../components/general/BackButton';

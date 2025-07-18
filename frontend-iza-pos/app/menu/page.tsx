@@ -120,7 +120,7 @@ export default function MenuPage() {
             )}
           </div>
 
-          <hr className="border-[var(--color-card-border)] mr-2" />
+          <hr className="border-[var(--color-card-border)] w-11/12 mx-auto" />
 
           {/* Item List Section */}
           <div className="grid grid-cols-3 gap-2 h-[500px] pr-2 mt-2 mb-3 overflow-y-auto place-content-start" style={{ gridAutoRows: 'min-content' }}>

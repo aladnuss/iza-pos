@@ -9,8 +9,9 @@ const menus = [
   { name: "Dashboard", href: "/dashboard" },
   { name: "Menu", href: "/menu" },
   { name: "Product", href: "/product" },
-  { name: "Reservation", href: "/reservation" },
-  { name: "Chat", href: "/chat" },
+  { name: "Table Order Management", href: "/tableordermanagement" },
+  { name: "Table Management", href: "/tablemanagement" },
+
   { name: "Accounting", href: "/accounting" },
   { name: "Settings", href: "/settings" },
 ];

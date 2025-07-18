@@ -31,7 +31,7 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
 
   return (
     <div className="w-full flex items-center pb-2">
-      <div className="flex items-center w-full bg-[var(--color-black)] border border-[var(--color-card-border)] rounded-3xl px-4 py-2 mt-2 shadow-inner shadow">
+      <div className="flex items-center w-full bg-[var(--color-black)] border border-[var(--color-card-border)] rounded-3xl px-4 py-2 mt-2 shadow-inner shadow-lg">
         {/* Default SearchBar dan Notif */}
         {!showAddItem && (
           <>
@@ -45,7 +45,7 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
             </div>
             {onButtonClick && (
               <button
-                className="ml-auto px-4 py-2 bg-[var(--color-dark)] text-white rounded-2xl border border-[var(--color-card-border)] font-semibold hover:bg-[var(--color-black)] transition"
+                className="ml-auto px-4 py-2 bg-[var(--color-dark)] text-white rounded-2xl border w-52 border-[var(--color-card-border)] font-semibold hover:bg-[var(--color-black)] transition"
                 onClick={onButtonClick}
               >
                 {buttonLabel}
