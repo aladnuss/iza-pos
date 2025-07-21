@@ -7,6 +7,7 @@ import OrderPanel from '../components/menu/orderpanel';
 
 import HeaderContent from '../components/general/HeaderContent';
 
+
 const DUMMY_CATEGORIES = [
   { id: 'breakfast', name: 'Breakfast', itemCount: 13, bgColor: '#e3f6f5' },
   { id: 'soups', name: 'Soups', itemCount: 8, bgColor: '#f3e8ff' },
@@ -97,52 +98,61 @@ export default function MenuPage() {
     <div className="h-screen flex">
       <main className="flex flex-1 ml-3 overflow-auto">
         <section className="flex flex-col pl-3 flex-1 overflow-hidden min-h-0">
-          {/* SearchBar */}
-    <div className='mr-2'>
-            <HeaderContent />
+          {/* SearchBar dan HeaderContent */}
+          <div className='mr-2'>
+            {selectedCategory === null ? (
+              <HeaderContent />
+            ) : (
+              <HeaderContent showAddItem showBackButton onBack={() => setSelectedCategory(null)} title={activeCategory?.name} />
+            )}
+          </div>
+
+          {/* Conditional Rendering: Category Section or Item Section */}
+          {selectedCategory === null ? (
+            // Category Section Full Height
+            <div className="flex flex-col flex-1">
+              <div className="grid grid-cols-3 place-content-start overflow-y-auto flex-1">
+                {categoriesWithColor.length > 0 ? (
+                  categoriesWithColor.map((cat, idx) => (
+                    <CategoryCard
+                      key={cat.id}
+                      name={cat.name}
+                      itemCount={cat.itemCount}
+                      bgColor={cat.palette}
+                      isActive={selectedCategory === cat.id}
+                      onClick={() => handleCategoryClick(cat.id)}
+                    />
+                  ))
+                ) : (
+                  <p className="col-span-3 text-center text-gray-400">Kategori tidak ditemukan</p>
+                )}
+              </div>
             </div>
-
-          {/* Category Section */}
-          <div className="grid grid-cols-3 overflow-y-auto h-[300px]">
-            {categoriesWithColor.length > 0 ? (
-              categoriesWithColor.map((cat, idx) => (
-                <CategoryCard
-                  key={cat.id}
-                  name={cat.name}
-                  itemCount={cat.itemCount}
-                  bgColor={cat.palette}
-                  isActive={selectedCategory === cat.id}
-                  onClick={() => handleCategoryClick(cat.id)}
-                />
-              ))
-            ) : (
-              <p className="col-span-3 text-center text-gray-400">Kategori tidak ditemukan</p>
-            )}
-          </div>
-
-          <hr className="border-[var(--color-card-border)] w-11/12 mx-auto" />
-
-          {/* Item List Section */}
-          <div className="grid grid-cols-3 gap-2 h-[500px] pr-2 mt-2 mb-3 overflow-y-auto place-content-start" style={{ gridAutoRows: 'min-content' }}>
-            {selectedCategory && DUMMY_ITEMS[selectedCategory] ? (
-              DUMMY_ITEMS[selectedCategory].map((item) => (
-                <CardItem
-                  key={item.id}
-                  name={item.name}
-                  price={item.price}
-                  count={itemCounts[item.id] || 0}
-                  onIncrement={() => handleIncrement(item.id)}
-                  onDecrement={() => handleDecrement(item.id)}
-                  active={(itemCounts[item.id] || 0) > 0}
-                  bgColor={categoriesWithColor.find(cat => cat.id === selectedCategory)?.palette}
-                />
-              ))
-            ) : (
-              <p className="flex items-center justify-center h-[390px] text-2sm font-semibold text-[var(--color-gray)] col-span-3">
-                Pilih kategori untuk melihat item
-              </p>
-            )}
-          </div>
+          ) : (
+            // Item Section Full Height
+            <div className="flex flex-col flex-1">
+              <div className="grid grid-cols-3 gap-2 flex-1 pr-2 mb-3 overflow-y-auto place-content-start" style={{ gridAutoRows: 'min-content' }}>
+                {DUMMY_ITEMS[selectedCategory] ? (
+                  DUMMY_ITEMS[selectedCategory].map((item) => (
+                    <CardItem
+                      key={item.id}
+                      name={item.name}
+                      price={item.price}
+                      count={itemCounts[item.id] || 0}
+                      onIncrement={() => handleIncrement(item.id)}
+                      onDecrement={() => handleDecrement(item.id)}
+                      active={(itemCounts[item.id] || 0) > 0}
+                      bgColor={categoriesWithColor.find(cat => cat.id === selectedCategory)?.palette}
+                    />
+                  ))
+                ) : (
+                  <p className="flex items-center justify-center h-[390px] text-2sm font-semibold text-[var(--color-gray)] col-span-3">
+                    Tidak ada item di kategori ini
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
         </section>
         {/* Side Panel */}
         <OrderPanel

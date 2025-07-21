@@ -11,7 +11,7 @@ interface HeaderContentProps {
 
 const HeaderContent: React.FC<HeaderContentProps> = ({ venues, activeVenue, onSelectVenue, onAddVenue }) => {
   return (
-    <div className="flex items-center justify-between w-full bg-[var(--color-black)] border border-[var(--color-card-border)] rounded-3xl px-4 mt-2 py-2 shadow-inner shadow-lg">
+    <div className="flex items-center justify-between w-full bg-[var(--color-black)] border border-[var(--color-card-border)] rounded-3xl px-4 mt-2 py-2 shadow-sm">
       <div className="flex-1 min-w-0">
         <div className="overflow-x-auto whitespace-nowrap py-2 scrollbar-thin   scrollbar-track-transparent max-w-[750px] flex gap-2">
           {venues.map(v => (

@@ -185,7 +185,7 @@ const ScoreDashboard = () => {
   // State untuk card yang sedang aktif (di-tap)
   const [activeCard, setActiveCard] = useState(null);
   return (
-    <div className="border border-1 rounded-3xl shadow-lg p-3" style={{ borderColor: 'var(--color-card-border)', background: 'var(--color-black)' }}>
+    <div className="border border-1 rounded-3xl shadow-md p-3" style={{ borderColor: 'var(--color-card-border)', background: 'var(--color-black)' }}>
       <div className="p-2 font-bold text-lg">Efficiency Score</div>
       <hr className="border-[var(--color-dark)] mt-2 w-117 mx-auto" />
       <div className="flex justify-center">

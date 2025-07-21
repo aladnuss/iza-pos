@@ -2,7 +2,7 @@ import React from "react";
 
 const Notif: React.FC = () => {
   return (
-    <div className="relative w-10 h-10 flex bg-[var(--color-dark)] items-center border border-3xl border-[var(--color-card-border)] rounded-2xl justify-center">
+    <div className="relative w-10 h-10 flex bg-[var(--color-dark)] items-center border border-[var(--color-card-border)] rounded-xl justify-center">
       {/* Badge */}
       <span className="absolute -top-1 -left-1 bg-[var(--color-palette-4)] text-[var(--color-black)] font-bold text-xs rounded-full w-5 h-5 flex items-center justify-center shadow-md z-10">
         12

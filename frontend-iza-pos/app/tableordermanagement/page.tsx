@@ -158,7 +158,7 @@ const TableOrderManagementPage = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <main className="flex-1 flex flex-col  ml-1 px-5 pb-2">
+      <main className="flex-1 flex flex-col  ml-2 px-4 pb-2">
         <section className="flex flex-col flex-1 min-h-0">
           {/* Header */}
           <HeaderContent
@@ -170,7 +170,7 @@ const TableOrderManagementPage = () => {
           {/* Main Content */}
           <div className="flex flex-1 gap-2 mt-2 min-h-0 h-full">
             {/* Card Konten Table Management (Tengah) */}
-            <div className="flex-1 bg-[var(--color-black)] rounded-2xl shadow border border-[var(--color-card-border)] p-6 min-h-0 h-full flex flex-col relative">
+            <div className="flex-1 bg-[var(--color-black)] rounded-3xl shadow border border-[var(--color-card-border)] p-6 min-h-0 h-full flex flex-col relative">
               {/* Konten table management (canvas, drag meja, dsb) akan di sini */}
               <RoomCanvas
                 tables={tables[venue] || []}

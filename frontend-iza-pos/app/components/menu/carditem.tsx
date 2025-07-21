@@ -23,8 +23,6 @@ function darkenColor(hex: string, amount = 0.2) {
 
 const CardItem: React.FC<CardItemProps> = ({ name, price, count, onIncrement, onDecrement, active, bgColor }) => {
   const textColor = 'text-[var(--color-white)]';
-  const subTextColor = 'text-[var(--color-gray)]';
-  const priceTextColor = 'text-[var(--color-gray)]';
   const btnBase = `border rounded-md w-6 h-6 flex items-center justify-center text-sm font-bold text-[var(--color-white)] hover:bg-[var(--color-gray)] hover:text-[var(--color-black)]`;
   const darkBg = bgColor ? darkenColor(bgColor, 0.18) : 'var(--color-gray)';
 

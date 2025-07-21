@@ -84,10 +84,11 @@ const RoomCanvas: React.FC<RoomCanvasProps> = ({
   };
 
   return (
-    <div id="room-canvas" className="w-full flex-1 bg-gray-100 rounded-xl relative overflow-x-hidden overflow-y-hidden border border-[var(--color-card-border)] min-h-[300px] touch-none" style={{ touchAction: 'none', overscrollBehavior: 'none' }}>
+    <div id="room-canvas" className="w-full flex-1 bg-[var(--color-black)] rounded-xl relative overflow-x-hidden overflow-y-hidden border-dashed border border-[var(--color-card-border)] min-h-[300px] touch-none 
+      bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]" style={{ touchAction: 'none', overscrollBehavior: 'none' }}>
       {/* Button Add Table di dalam canvas */}
       <button
-        className="absolute top-4 right-4 z-10 bg-[var(--color-dark)] text-white font-bold px-5 py-2 rounded-2xl shadow hover:bg-[var(--color-gray)] transition"
+        className="absolute top-4 right-4 z-10 bg-[var(--color-dark)]   border border-[var(--color-card-border)] text-white font-bold px-5 py-2 rounded-2xl shadow hover:bg-[var(--color-gray)] transition"
         onClick={onAddTable}
       >
         Add Table +
@@ -418,18 +419,19 @@ const RoomCanvas: React.FC<RoomCanvasProps> = ({
       {/* Save/Cancel button muncul jika layout dirty */}
       {isLayoutDirty && (
         <div className="absolute left-1/2 -translate-x-1/2 bottom-6 z-30 flex gap-4">
-          <button
-            className="bg-green-600 text-white font-bold px-6 py-2 rounded-xl shadow hover:bg-green-700 transition"
-            onClick={onSave}
-          >
-            Save
-          </button>
-          <button
-            className="bg-red-600 text-white font-bold px-6 py-2 rounded-xl shadow hover:bg-red-700 transition"
+                    <button
+            className="bg-[var(--color-black)] text-white border border-[var(--color-card-border] font-bold px-6 py-2 rounded-xl shadow transition"
             onClick={onCancel}
           >
             Cancel
           </button>
+          <button
+            className="bg-[var(--color-dark)] text-white border border-[var(--color-card-border] font-bold px-9 py-2 rounded-xl shadow  transition"
+            onClick={onSave}
+          >
+            Save
+          </button>
+
         </div>
       )}
     </div>

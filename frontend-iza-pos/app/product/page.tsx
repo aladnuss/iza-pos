@@ -1,14 +1,13 @@
 "use client";
 
 import React, { useState } from 'react';
-import ProductCategoryCard from '../components/product/ProductCategoryCard';
+
+import ProductCategoryTable from '../components/product/ProductCategoryTable';
 import ProductItemCard from '../components/product/ProductItemCard';
 import ProductFormPanel from '../components/product/ProductFormPanel';
-import SearchBar from '../components/general/searchbar';
 import DeleteConfirmModal from '../components/general/DeleteConfirmModal';
 import AddCategoryForm from '../components/product/AddCategoryForm';
 import AddItemForm from '../components/product/AddItemForm';
-import BackButton from '../components/general/BackButton';
 import AddVariantTable from '../components/product/AddVariantTable';
 import { VariantType } from '../components/product/AddVariantTable';
 import VariantForm from '../components/product/VariantForm';
@@ -24,6 +23,12 @@ const DUMMY_CATEGORIES = [
   { id: 'bevexrage', name: 'Beverage', itemCount: 8, bgColor: '#e3f6f5', description: 'All drinks' },
   { id: 'snaxck', name: 'Snack', itemCount: 6, bgColor: '#f3e8ff', description: 'Light snacks' },
   { id: 'maxin', name: 'Main Course', itemCount: 7, bgColor: '#ffe4ef', description: 'Main dishes' },
+  { id: 'bevesxrage', name: 'Beverage', itemCount: 8, bgColor: '#e3f6f5', description: 'All drinks' },
+  { id: 'snasxck', name: 'Snack', itemCount: 6, bgColor: '#f3e8ff', description: 'Light snacks' },
+  { id: 'maxisn', name: 'Main Course', itemCount: 7, bgColor: '#ffe4ef', description: 'Main dishes' },
+  { id: 'beavexrage', name: 'Beverage', itemCount: 8, bgColor: '#e3f6f5', description: 'All drinks' },
+  { id: 'sfnaxck', name: 'Snack', itemCount: 6, bgColor: '#f3e8ff', description: 'Light snacks' },
+  { id: 'maxian', name: 'Main Course', itemCount: 7, bgColor: '#ffe4ef', description: 'Main dishes' },
 ];
 
 const INITIAL_ITEMS = {
@@ -304,28 +309,28 @@ export default function ProductPage() {
   return (
     <div className="h-screen flex">
       <main className="flex flex-1 ml-3 overflow-auto">
-        <section className="flex flex-col  flex-1 overflow-hidden min-h-0 mr-2 pl-3 ">
+        <section className="flex flex-col flex-1 overflow-hidden min-h-0 mr-2 pl-3 ">
           {panelMode === 'category' && (
             <div>
               <div className="flex items-center">
                 <HeaderContent onButtonClick={handleAddCategory} buttonLabel="Add Category +" />
               </div>
-              <div className="grid grid-cols-3 gap-2">
-                {filteredCategories.length > 0 ? (
-                  filteredCategories.map((cat: any, idx: number) => (
-                    <ProductCategoryCard
-                      key={cat.id}
-                      name={cat.name}
-                      itemCount={items[cat.id]?.length || 0}
-                      bgColor={PALETTE_COLORS[idx % PALETTE_COLORS.length]}
-                      isActive={selectedCategory === cat.id}
-                      onClick={() => handleCategoryClick(cat.id)}
-                    />
-                  ))
-                ) : (
-                  <p className="col-span-3 text-center text-gray-400">Kategori tidak ditemukan</p>
-                )}
-              </div>
+              <ProductCategoryTable
+                categories={filteredCategories.map((cat: any) => ({
+                  id: cat.id,
+                  name: cat.name,
+                  itemCount: items[cat.id]?.length || 0,
+                  description: cat.description,
+                  items: (items[cat.id] || []).map((item: any) => ({
+                    id: item.id,
+                    name: item.name,
+                    price: item.price,
+                    description: item.description
+                  }))
+                }))}
+                onEdit={handleCategoryClick}
+                onDelete={handleDeleteCategory}
+              />
             </div>
           )}
           {panelMode === 'item' && selectedCategory && (
@@ -372,46 +377,47 @@ export default function ProductPage() {
             </div>
           )}
         </section>
-        {/* Panel Form */}
-        <aside className="w-80  bg-[var(--color-black)] text-white border rounded-3xl mr-4 mt-2 mb-2 border-[var(--color-card-border)] flex flex-col overflow-hidden">
-          {formMode === 'add-category' && (
-            <AddCategoryForm
-              onSave={handleSaveAddCategory}
-              onCancel={handleCancelAddCategory}
-            />
-          )}
-          {formMode === 'add-item' && (
-            <AddItemForm
-              onSave={handleSaveAddItem}
-              onCancel={handleCancelAddItem}
-            />
-          )}
-          {formMode === 'edit-category' && (
-            <ProductFormPanel
-              type="category"
-              initialData={activeCategory ? { name: activeCategory.name, description: activeCategory.description } : null}
-              onSave={handleSave}
-              onDeleteCategory={handleDeleteCategory}
-            />
-          )}
-          {panelMode === 'item' && formMode === 'edit-item' && !showVariantForm && selectedItemId && (
-            <ProductFormPanel
-              type="item"
-              initialData={activeItem ? { ...activeItem } : null}
-              onSave={handleSave}
-              onDeleteItem={handleDeleteItemForm}
-              onShowVariantTable={handleShowVariantTable}
-            />
-          )}
-          {panelMode === 'item' && formMode === 'edit-item' && showVariantForm && selectedItemId && (
-            <VariantForm
-              key={variantDraft ? variantDraft.id : 'new'}
-              onSave={handleSaveVariant}
-              onCancel={handleBackFromVariantForm}
-              initialData={variantDraft ? { name: variantDraft.name, description: variantDraft.description, variasi: variantDraft.variants } : undefined}
-            />
-          )}
-        </aside>
+        {(formMode !== 'edit-category' || selectedCategory || panelMode !== 'category') && (
+          <aside className="w-80  bg-[var(--color-black)] text-white border rounded-3xl mr-4 mt-2 mb-2 border-[var(--color-card-border)] flex flex-col overflow-hidden">
+            {formMode === 'add-category' && (
+              <AddCategoryForm
+                onSave={handleSaveAddCategory}
+                onCancel={handleCancelAddCategory}
+              />
+            )}
+            {formMode === 'add-item' && (
+              <AddItemForm
+                onSave={handleSaveAddItem}
+                onCancel={handleCancelAddItem}
+              />
+            )}
+            {formMode === 'edit-category' && selectedCategory && (
+              <ProductFormPanel
+                type="category"
+                initialData={activeCategory ? { name: activeCategory.name, description: activeCategory.description } : null}
+                onSave={handleSave}
+                onDeleteCategory={handleDeleteCategory}
+              />
+            )}
+            {panelMode === 'item' && formMode === 'edit-item' && !showVariantForm && selectedItemId && (
+              <ProductFormPanel
+                type="item"
+                initialData={activeItem ? { ...activeItem } : null}
+                onSave={handleSave}
+                onDeleteItem={handleDeleteItemForm}
+                onShowVariantTable={handleShowVariantTable}
+              />
+            )}
+            {panelMode === 'item' && formMode === 'edit-item' && showVariantForm && selectedItemId && (
+              <VariantForm
+                key={variantDraft ? variantDraft.id : 'new'}
+                onSave={handleSaveVariant}
+                onCancel={handleBackFromVariantForm}
+                initialData={variantDraft ? { name: variantDraft.name, description: variantDraft.description, variasi: variantDraft.variants } : undefined}
+              />
+            )}
+          </aside>
+        )}
       </main>
       {/* Delete Confirm Modals */}
       <DeleteConfirmModal

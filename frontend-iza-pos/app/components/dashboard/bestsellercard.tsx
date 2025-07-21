@@ -28,7 +28,7 @@ const BestSellerCard: React.FC = () => {
   const [filter, setFilter] = useState('today');
 
   return (
-    <div className='bg-[var(--color-black)] border-1 rounded-3xl shadow-lg h-[470px]' style={{ borderColor: 'var(--color-card-border)' }}>
+    <div className='bg-[var(--color-black)] border-1 rounded-3xl shadow-md h-[470px]' style={{ borderColor: 'var(--color-card-border)' }}>
       <div className='text-white flex justify-between pl-3 pt-3 pb-3 pr-4'>   
         <p className='p-2 font-bold text-lg'>Best Seller</p>
         <CustomSelect options={FILTERS} value={filter} onChange={setFilter} />

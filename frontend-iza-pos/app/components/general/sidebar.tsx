@@ -10,10 +10,10 @@ const menus = [
   { name: "Menu", href: "/menu" },
   { name: "Product", href: "/product" },
   { name: "Table Order Management", href: "/tableordermanagement" },
-  { name: "Table Management", href: "/tablemanagement" },
+  { name: "sundala", href: "/tablemanagement" },
 
-  { name: "Accounting", href: "/accounting" },
-  { name: "Settings", href: "/settings" },
+  { name: "kongkong", href: "/accounting" },
+  { name: "telaso", href: "/settings" },
 ];
 
 export default function Sidebar() {

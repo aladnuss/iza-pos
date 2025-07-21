@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import SearchBar from "./searchbar";
 import Notif from "./notif";
 import BackButton from "./BackButton";
+import BackButtonWithTitle from '../menu/BackButtonWithTitle';
 
 interface HeaderContentProps {
   onButtonClick?: () => void;
@@ -14,6 +15,7 @@ interface HeaderContentProps {
   onItemSearchChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   showBackButton?: boolean;
   onBack?: () => void;
+  title?: string;
 }
 
 const HeaderContent: React.FC<HeaderContentProps> = ({
@@ -26,12 +28,13 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
   onItemSearchChange,
   showBackButton,
   onBack,
+  title,
 }) => {
   const [searchValue, setSearchValue] = useState("");
 
   return (
     <div className="w-full flex items-center pb-2">
-      <div className="flex items-center w-full bg-[var(--color-black)] border border-[var(--color-card-border)] rounded-3xl px-4 py-2 mt-2 shadow-inner shadow-lg">
+      <div className="flex items-center w-full bg-[var(--color-black)] border border-[var(--color-card-border)] rounded-3xl px-4 py-2 mt-2 shadow-sm">
         {/* Default SearchBar dan Notif */}
         {!showAddItem && (
           <>
@@ -62,9 +65,7 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
               placeholder="Cari item..."
               className="min-w-[180px]"
             />
-
-              <Notif />
-     
+            <Notif />
             {/* Tombol hanya muncul jika onAddItem diberikan */}
             {onAddItem && (
               <button
@@ -74,10 +75,16 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
                 {addButtonLabel || 'Add Item +'}
               </button>
             )}
-            {showBackButton && (
-        
-                <BackButton onClick={onBack} />
-           
+            {/* Spacer untuk mendorong BackButton dan title ke kanan */}
+            <div className="flex-1" />
+            {showBackButton && title && (
+              <BackButtonWithTitle onClick={onBack} title={title} />
+            )}
+            {showBackButton && !title && (
+              <BackButton onClick={onBack} />
+            )}
+            {!showBackButton && title && (
+              <span className="font-bold text-lg">{title}</span>
             )}
           </div>
         )}
