@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { DollarSign, FileText, Users, ShoppingCart, ChevronDown } from 'lucide-react';
-import SearchBar from '../components/general/searchbar';
 import CardDashboard from '../components/dashboard/card';
 import BestSellerCard from '../components/dashboard/bestsellercard';
 import SalesOverviewChart from '../components/dashboard/salesoverviewchart';
@@ -11,17 +10,15 @@ import ScoreDashboard from '../components/dashboard/scoredashboard';
 import HeaderContent from '../components/general/HeaderContent';
 
 export default function Dashboard() {
-  const [searchValue, setSearchValue] = useState('');
-  // Sample data for the chart
  
   return (
-    <main className="flex-1 pl-6 pr-4 pb-2 box-border">
+    <main className="flex-1 pl-8 pr-4 pb-2 box-border">
 
         <HeaderContent />
 
 
       {/* Card Baris 1*/}
-      <div className="grid gap-2 grid-cols-4">
+      <div className="grid gap-4 grid-cols-4">
         <div className="relative">
           <CardDashboard
             icon={<DollarSign color='var(--color-white)'/>}
@@ -54,7 +51,6 @@ export default function Dashboard() {
           icon={<ShoppingCart color='var(--color-white)'/>}
           title="On Progress"
           value="23 Items"
-          valueClassName="mb-6"
         >
           <img
             src="/1.png"
@@ -78,13 +74,13 @@ export default function Dashboard() {
       </div>
 
       {/* Card Baris 2*/}
-      <div className="grid grid-cols-2 gap-2 mt-2">
+      <div className="grid grid-cols-2 gap-4 mt-4">
         <BestSellerCard />
         <ScoreDashboard />
       </div>
 
       {/* Card Baris 3*/}
-      <div className="grid grid-cols-3 gap-2 mt-2">
+      <div className="grid grid-cols-3 gap-4 mt-4">
         <div className="col-span-2"><SalesOverviewChart /></div>
         <div className="col-span-1"><PaymentChart /></div>
       </div>

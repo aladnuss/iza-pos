@@ -98,7 +98,7 @@ const OrderPanel: React.FC<OrderPanelProps> = ({
                 </div>
               </div>
               <p className="text-sm font-semibold text-white">
-                ${(item.price * item.quantity).toFixed(2)}
+                Rp {(item.price * item.quantity).toLocaleString('id-ID')}
               </p>
             </div>
           ))}
@@ -112,17 +112,17 @@ const OrderPanel: React.FC<OrderPanelProps> = ({
           <div className="space-y-2 text-sm text-[var(--color-gray)]">
             <div className="flex justify-between">
               <span>Subtotal</span>
-              <span>${subtotal.toFixed(2)}</span>
+              <span>Rp {subtotal.toLocaleString('id-ID')}</span>
             </div>
             <div className="flex justify-between">
               <span>Tax 10%</span>
-              <span>${tax.toFixed(2)}</span>
+              <span>Rp {tax.toLocaleString('id-ID')}</span>
             </div>
           </div>
           <hr className="my-3 border-[var(--color-card-border)]" />
           <div className="flex justify-between text-xl font-bold text-white">
             <span>Total</span>
-            <span>${total.toFixed(2)}</span>
+            <span>Rp {total.toLocaleString('id-ID')}</span>
           </div>
         </div>
 

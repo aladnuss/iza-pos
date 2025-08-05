@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import SearchBar from '../general/searchbar';
-import { Calendar, Filter } from 'lucide-react';
+import { Calendar, Filter, Expand } from 'lucide-react';
 
 // Dummy data untuk contoh
 const dummyOrders = [
@@ -9,7 +8,11 @@ const dummyOrders = [
 
 const venues = ['All Venue', 'Floor 1', 'Floor 2'];
 
-const OrderManagementPanel: React.FC = () => {
+interface OrderManagementPanelProps {
+  onExpand?: () => void;
+}
+
+const OrderManagementPanel: React.FC<OrderManagementPanelProps> = ({ onExpand }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [venue, setVenue] = useState('All Venue');
   const [search, setSearch] = useState('');
@@ -27,7 +30,7 @@ const OrderManagementPanel: React.FC = () => {
   };
 
   return (
-    <aside className="w-[350px] min-h-[600px] bg-[var(--color-black)] rounded-3xl shadow-lg p-5 flex flex-col gap-4 border border-[var(--color-card-border)]">
+    <aside className="w-[350px] min-h-[600px]  shadow-lg p-5 flex flex-col gap-4 bg-[var(--color-black)] rounded-3xl border border-[var(--color-card-border)]">
       {/* date */}
       <div className="w-full">
         <h2 className="text-xl font-bold text-[var(--color-white)] mb-4">Order List</h2>
@@ -51,6 +54,14 @@ const OrderManagementPanel: React.FC = () => {
             className="bg-[var(--color-dark)] text-white pl-10 pr-4 py-2 rounded-2xl w-full border border-[var(--color-card-border)] focus:outline-none"
           />
         </div>
+        {/* Logo expand */}
+        <button 
+          className="w-10 h-10 p-2 rounded-xl bg-[var(--color-dark)] hover:bg-[var(--color-gray)] border border-[var(--color-card-border)] flex items-center justify-center" 
+          title="Expand"
+          onClick={onExpand}
+        >
+          <Expand className="w-5 h-5 text-white" />
+        </button>
         {/* Logo kalender */}
         <button className="w-10 h-10 p-2 rounded-xl bg-[var(--color-dark)] hover:bg-[var(--color-gray)] border border-[var(--color-card-border)] flex items-center justify-center" title="Calendar">
           <Calendar className="w-5 h-5 text-white" />

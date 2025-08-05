@@ -5,12 +5,14 @@ import AddVenueModal from '../components/tableordermanagement/AddVenueModal';
 import AddTableModal from '../components/tableordermanagement/AddTableModal';
 import RoomCanvas from '../components/tableordermanagement/RoomCanvas';
 import OrderManagementPanel from '../components/tableordermanagement/OrderManagementPanel';
+import OrderList from '../components/tableordermanagement/OrderList';
 
 const TableOrderManagementPage = () => {
   const [venue, setVenue] = useState('Floor 1');
   const [venues, setVenues] = useState(['Floor 1']);
   const [showAddVenue, setShowAddVenue] = useState(false);
   const [showAddTable, setShowAddTable] = useState(false);
+  const [isOrderListExpanded, setIsOrderListExpanded] = useState(false);
 
   const handleAddVenue = (name: string) => {
     setVenues(vs => [...vs, name]);
@@ -158,7 +160,7 @@ const TableOrderManagementPage = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <main className="flex-1 flex flex-col  ml-2 px-4 pb-2">
+      <main className="flex-1 flex flex-col ml-4 px-4 pb-2">
         <section className="flex flex-col flex-1 min-h-0">
           {/* Header */}
           <HeaderContent
@@ -166,46 +168,55 @@ const TableOrderManagementPage = () => {
             activeVenue={venue}
             onSelectVenue={setVenue}
             onAddVenue={() => setShowAddVenue(true)}
+            isExpanded={isOrderListExpanded}
+            onMinimize={() => setIsOrderListExpanded(false)}
           />
           {/* Main Content */}
           <div className="flex flex-1 gap-2 mt-2 min-h-0 h-full">
-            {/* Card Konten Table Management (Tengah) */}
-            <div className="flex-1 bg-[var(--color-black)] rounded-3xl shadow border border-[var(--color-card-border)] p-6 min-h-0 h-full flex flex-col relative">
-              {/* Konten table management (canvas, drag meja, dsb) akan di sini */}
-              <RoomCanvas
-                tables={tables[venue] || []}
-                setTables={arr => setTables(t => ({ ...t, [venue]: arr }))}
-                onAddTable={() => setShowAddTable(true)}
-                isLayoutDirty={isLayoutDirty}
-                onSave={handleSave}
-                onCancel={handleCancel} 
-                draggedId={draggedId}
-                setDraggedId={setDraggedId}
-                dragOffset={dragOffset}
-                setDragOffset={setDragOffset}
-                dragPos={dragPos}
-                setDragPos={setDragPos}
-                dragBackup={dragBackup}
-                setDragBackup={setDragBackup}
-                onStartDrag={handleDragStart}
-                onDrag={handleDrag}
-                onDragEnd={handleDragEnd}
-                onEditTable={(table) => { setSelectedTable(table); setShowEditTable(true); }}
-              />
-              {/* Legend status meja di bawah canvas (selalu tampil semua status) */}
-              <div className="flex justify-center mt-6">
-                <div className="flex gap-6 items-center px-8 py-3 rounded-2xl bg-[var(--color-dark)] shadow border border-[var(--color-card-border)]">
-                  {legendConfig.map(l => (
-                    <div className="flex items-center gap-2" key={l.status}>
-                      <span className={`inline-block w-5 h-5 rounded ${l.color} border border-gray-300`} />
-                      <span className="text-sm text-white">{l.label}</span>
+            {isOrderListExpanded ? (
+              /* Expanded OrderList - takes full width */
+              <OrderList />
+            ) : (
+              <>
+                {/* Card Konten Table Management (Tengah) */}
+                <div className="flex-1 bg-[var(--color-black)] rounded-3xl shadow border border-[var(--color-card-border)] p-6 min-h-0 h-full flex flex-col relative">
+                  {/* Konten table management (canvas, drag meja, dsb) akan di sini */}
+                  <RoomCanvas
+                    tables={tables[venue] || []}
+                    setTables={arr => setTables(t => ({ ...t, [venue]: arr }))}
+                    onAddTable={() => setShowAddTable(true)}
+                    isLayoutDirty={isLayoutDirty}
+                    onSave={handleSave}
+                    onCancel={handleCancel} 
+                    draggedId={draggedId}
+                    setDraggedId={setDraggedId}
+                    dragOffset={dragOffset}
+                    setDragOffset={setDragOffset}
+                    dragPos={dragPos}
+                    setDragPos={setDragPos}
+                    dragBackup={dragBackup}
+                    setDragBackup={setDragBackup}
+                    onStartDrag={handleDragStart}
+                    onDrag={handleDrag}
+                    onDragEnd={handleDragEnd}
+                    onEditTable={(table) => { setSelectedTable(table); setShowEditTable(true); }}
+                  />
+                  {/* Legend status meja di bawah canvas (selalu tampil semua status) */}
+                  <div className="flex justify-center mt-6">
+                    <div className="flex gap-6 items-center px-8 py-3 rounded-2xl bg-[var(--color-dark)] shadow border border-[var(--color-card-border)]">
+                      {legendConfig.map(l => (
+                        <div className="flex items-center gap-2" key={l.status}>
+                          <span className={`inline-block w-5 h-5 rounded ${l.color} border border-gray-300`} />
+                          <span className="text-sm text-white">{l.label}</span>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  </div>
                 </div>
-              </div>
-            </div>
-            {/* Card Table List (Kanan) */}
-            <OrderManagementPanel />
+                {/* Card Table List (Kanan) */}
+                <OrderManagementPanel onExpand={() => setIsOrderListExpanded(true)} />
+              </>
+            )}
           </div>
         </section>
       </main>

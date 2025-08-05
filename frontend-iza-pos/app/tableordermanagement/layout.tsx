@@ -1,15 +1,15 @@
 import React from 'react';
 import Sidebar from '../components/general/sidebar';
 
-const tableordermanagement: React.FC = ({children}:{children: React.ReactNode}) => {
+export default function TableOrderManagementLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="h-screen overflow-hidden">
-      <Sidebar />
-      <div className="ml-[220px] h-full overflow-y-auto">
+    <div className="flex h-full min-h-screen">
+      <aside className="w-[220px] bg-[var(--color-black)] text-white flex-shrink-0">
+        <Sidebar />
+      </aside>
+      <main className="flex-1 overflow-y-auto">
         {children}
-      </div>
+      </main>
     </div>
   );
 }
-
-export default tableordermanagement;

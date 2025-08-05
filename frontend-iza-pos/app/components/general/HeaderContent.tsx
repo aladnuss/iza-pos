@@ -3,19 +3,19 @@ import React, { useState } from "react";
 import SearchBar from "./searchbar";
 import Notif from "./notif";
 import BackButton from "./BackButton";
-import BackButtonWithTitle from '../menu/BackButtonWithTitle';
 
 interface HeaderContentProps {
-  onButtonClick?: () => void;
+  title?: string;
   buttonLabel?: string;
+  onButtonClick?: () => void;
   showAddItem?: boolean;
+  addButtonLabel?: string;
   onAddItem?: () => void;
-  addButtonLabel?: string; // Tambahan: label custom untuk tombol add
   itemSearchValue?: string;
   onItemSearchChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   showBackButton?: boolean;
   onBack?: () => void;
-  title?: string;
+  placeholder?: string; // Add this line
 }
 
 const HeaderContent: React.FC<HeaderContentProps> = ({
@@ -29,19 +29,20 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
   showBackButton,
   onBack,
   title,
+  placeholder,
 }) => {
   const [searchValue, setSearchValue] = useState("");
 
   return (
     <div className="w-full flex items-center pb-2">
-      <div className="flex items-center w-full bg-[var(--color-black)] border border-[var(--color-card-border)] rounded-3xl px-4 py-2 mt-2 shadow-sm">
+      <div className="flex items-center w-full bg-[var(--color-black)] border border-[var(--color-card-border)] rounded-3xl px-4 py-2 mt-2 mb-2 shadow-sm">
         {/* Default SearchBar dan Notif */}
         {!showAddItem && (
           <>
             <SearchBar
               value={searchValue}
               onChange={e => setSearchValue(e.target.value)}
-              placeholder="Cari kategori..."
+              placeholder={placeholder || "Cari kategori..."}
             />
             <div className="ml-2">
               <Notif />
@@ -62,30 +63,30 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
             <SearchBar
               value={itemSearchValue}
               onChange={onItemSearchChange}
-              placeholder="Cari item..."
+              placeholder={placeholder || "Cari item..."}
               className="min-w-[180px]"
             />
             <Notif />
-            {/* Tombol hanya muncul jika onAddItem diberikan */}
-            {onAddItem && (
-              <button
-                className="ml-auto w-40 px-4 py-2 bg-[var(--color-dark)] text-white rounded-2xl border border-[var(--color-card-border)] font-semibold hover:bg-[var(--color-black)] transition"
-                onClick={onAddItem}
-              >
-                {addButtonLabel || 'Add Item +'}
-              </button>
-            )}
-            {/* Spacer untuk mendorong BackButton dan title ke kanan */}
-            <div className="flex-1" />
-            {showBackButton && title && (
-              <BackButtonWithTitle onClick={onBack} title={title} />
-            )}
-            {showBackButton && !title && (
-              <BackButton onClick={onBack} />
-            )}
             {!showBackButton && title && (
               <span className="font-bold text-lg">{title}</span>
             )}
+            {/* Spacer untuk mendorong Add Item button ke kanan */}
+            <div className="flex-1" />
+            {/* Buttons container */}
+            <div className="flex items-center gap-2">
+              {onAddItem && (
+                <button
+                  className="w-40 px-4 py-2 bg-[var(--color-dark)] text-white rounded-2xl border border-[var(--color-card-border)] font-semibold hover:bg-[var(--color-black)] transition"
+                  onClick={onAddItem}
+                >
+                  {addButtonLabel || 'Add Item +'}
+                </button>
+              )}
+              {showBackButton && (
+                <BackButton onClick={onBack} />
+              )}
+            </div>
+            
           </div>
         )}
       </div>
@@ -93,4 +94,4 @@ const HeaderContent: React.FC<HeaderContentProps> = ({
   );
 };
 
-export default HeaderContent;  
+export default HeaderContent;

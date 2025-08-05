@@ -19,6 +19,8 @@
   --foreground: var(--color-white);
   --color-card-border: #292C2D;
   --color-chart-grid: #000000; /* grid gelap untuk dark mode */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #d1d5db;
 }
 
 
@@ -31,7 +33,7 @@
   --color-white-light: #ffffff;
   --color-gray: #444;
   --background: #ffffff;
-  --foreground: #18181b;
+  --foreground: #18181b;  
   --color-palette-1: #C0C0C0;
   --color-palette-2: #A0A0A0;
   --color-palette-3: #808080;
@@ -40,6 +42,8 @@
   --color-palette-6: #202020;
   --color-card-border: #9e9e9e;
   --color-chart-grid: #000000; /* grid terang untuk light mode */
+  --color-text-primary: #18181b;
+  --color-text-secondary: #6b7280;
 }
 
 
